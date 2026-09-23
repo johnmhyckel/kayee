@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+.videos-page {
+  width: 100%;
+  padding: 40px 30px 60px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.videos-header {
+  text-align: center;
+  margin-bottom: 28px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.videos-header h1 {
+  font-family: 'Dancing Script', cursive;
+  font-size: 3rem;
+  color: #ff6f91;
+  margin-bottom: 6px;
+  text-shadow: 2px 2px 4px rgba(255, 111, 145, 0.2);
+}
+
+.videos-header p {
+  font-size: 14px;
+  color: #b06080;
+}
+
+/* Upload area */
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 24px;
+  border: 2px dashed rgba(255, 111, 145, 0.5);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  margin-bottom: 30px;
+  transition: all 0.25s ease;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.upload-area:hover {
+  background: rgba(255, 255, 255, 0.9);
+  border-color: #ff6f91;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 111, 145, 0.2);
+}
+
+.upload-icon {
+  font-size: 2.2rem;
+}
+
+.upload-label {
+  font-size: 14px;
+  color: #ff6f91;
+  font-weight: 600;
+}
+
+.upload-input {
+  display: none;
+}
+
+/* Empty state */
+.videos-empty {
+  text-align: center;
+  color: #c08090;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Grid */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  animation: fadeIn 0.6s ease-out;
+}
+
+.video-card {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(255, 111, 145, 0.2);
+  border: 2px solid rgba(255, 182, 193, 0.4);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 35px rgba(255, 111, 145, 0.35);
+}
+
+.video-player {
+  width: 100%;
+  display: block;
+  border-radius: 16px 16px 0 0;
+  max-height: 200px;
+  object-fit: cover;
+  background: #000;
+}
+
+.video-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  gap: 8px;
+}
+
+.video-name {
+  font-size: 12px;
+  color: #b06080;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+.video-remove {
+  background: none;
+  border: none;
+  color: #ff6f91;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.video-remove:hover {
+  background: rgba(255, 111, 145, 0.1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* ── Shared layout ── */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+}
+
+.app-content {
+  margin-top: 60px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  position: relative;
+}
+
+/* ── Lock screen ── */
+.lock-overlay {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
+  font-family: 'Poppins', sans-serif;
+}
+
+.lock-card {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 48px 40px;
+  border-radius: 28px;
+  text-align: center;
+  width: 320px;
+  box-shadow: 0 15px 40px rgba(255, 111, 145, 0.35), 0 5px 15px rgba(0,0,0,0.08);
+  border: 2px solid rgba(255, 182, 193, 0.5);
+  animation: fadeIn 0.7s ease-out;
+}
+
+.lock-icon {
+  font-size: 3rem;
+  margin-bottom: 14px;
+}
+
+.lock-title {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  color: #ff6f91;
+  margin-bottom: 24px;
+}
+
+.lock-input {
+  padding: 14px;
+  width: 75%;
+  font-size: 20px;
+  text-align: center;
+  letter-spacing: 6px;
+  border: 2px solid #ffb6c1;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: all 0.3s ease;
+  display: block;
+  margin-inline: auto;
+}
+
+.lock-input:focus {
+  outline: none;
+  border-color: #ff6f91;
+  box-shadow: 0 0 15px rgba(255, 111, 145, 0.35);
+}
+
+.lock-btn {
+  padding: 12px 36px;
+  background: linear-gradient(135deg, #ff6f91 0%, #ff9a9e 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+}
+
+.lock-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 111, 145, 0.5);
+}
+
+/* shake animation on wrong PIN */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%       { transform: translateX(-10px); }
+  40%       { transform: translateX(10px); }
+  60%       { transform: translateX(-8px); }
+  80%       { transform: translateX(8px); }
+}
+
+.shake {
+  animation: shake 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
