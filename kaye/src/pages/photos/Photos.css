@@ -156,3 +156,88 @@
     gap: 20px;
   }
 }
+
+/* ── Lightbox ── */
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 10, 20, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+  cursor: zoom-out;
+}
+
+.lightbox-img {
+  max-width: 92vw;
+  max-height: 88vh;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  object-fit: contain;
+  cursor: default;
+  animation: lightboxIn 0.2s ease-out;
+}
+
+.lightbox-close {
+  position: fixed;
+  top: 18px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 16px;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  z-index: 1001;
+}
+
+.lightbox-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* make the thumbnail show a zoom cursor */
+.photo-img {
+  cursor: zoom-in;
+}
+
+@keyframes lightboxIn {
+  from { opacity: 0; transform: scale(0.93); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* ── Skeleton loader ── */
+.photo-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    rgba(255, 182, 193, 0.3) 25%,
+    rgba(255, 182, 193, 0.6) 50%,
+    rgba(255, 182, 193, 0.3) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s infinite;
+  border-radius: 14px;
+}
+
+.photo-img {
+  transition: opacity 0.3s ease;
+}
+
+.photo-card--loaded .photo-skeleton {
+  display: none;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

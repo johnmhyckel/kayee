@@ -1,16 +1,44 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { fetchPhotos, uploadPhoto, removePhoto } from '../../supabase';
 import ConfirmDialog from '../../components/ConfirmDialog';
 import './Photos.css';
+
+// Individual photo card — fades in once the image has actually loaded
+const PhotoCard = ({ photo, onView, onRemove }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  return (
+    <div className={`photo-card ${loaded ? 'photo-card--loaded' : ''}`}>
+      {!loaded && <div className="photo-skeleton" />}
+      <img
+        src={photo.url}
+        alt={photo.name}
+        className="photo-img"
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        onClick={() => onView(photo)}
+        style={{ opacity: loaded ? 1 : 0 }}
+      />
+      <button
+        className="photo-remove"
+        onClick={() => onRemove(photo.id)}
+        title="Remove"
+      >
+        ✕
+      </button>
+    </div>
+  );
+};
 
 const Photos = () => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [pendingDeleteId, setPendingDeleteId] = useState(null);
+  const [lightbox, setLightbox] = useState(null);
   const inputRef = useRef(null);
 
-  // Load all photos from Supabase on mount
   useEffect(() => {
     fetchPhotos()
       .then(setPhotos)
@@ -35,7 +63,7 @@ const Photos = () => {
     }
   };
 
-  const confirmRemove = (id) => setPendingDeleteId(id);
+  const confirmRemove = useCallback((id) => setPendingDeleteId(id), []);
   const handleCancelDelete = () => setPendingDeleteId(null);
 
   const handleConfirmDelete = async () => {
@@ -50,6 +78,9 @@ const Photos = () => {
     }
   };
 
+  // Skeleton grid shown while the list is still fetching from Supabase
+  const skeletonCount = 6;
+
   return (
     <div className="photos-page">
       {pendingDeleteId !== null && (
@@ -58,6 +89,18 @@ const Photos = () => {
           onCancel={handleCancelDelete}
           onConfirm={handleConfirmDelete}
         />
+      )}
+
+      {lightbox && (
+        <div className="lightbox-backdrop" onClick={() => setLightbox(null)}>
+          <button className="lightbox-close" onClick={() => setLightbox(null)}>✕</button>
+          <img
+            src={lightbox.url}
+            alt={lightbox.name}
+            className="lightbox-img"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
       )}
 
       <div className="photos-header">
@@ -84,22 +127,25 @@ const Photos = () => {
       </div>
 
       {loading ? (
-        <p className="photos-empty">Loading photos… 🌸</p>
+        // Skeleton placeholders so the page doesn't feel empty
+        <div className="photos-grid">
+          {Array.from({ length: skeletonCount }).map((_, i) => (
+            <div className="photo-card" key={i}>
+              <div className="photo-skeleton" />
+            </div>
+          ))}
+        </div>
       ) : photos.length === 0 ? (
         <p className="photos-empty">No photos yet — upload some above! 🌸</p>
       ) : (
         <div className="photos-grid">
           {photos.map((photo) => (
-            <div className="photo-card" key={photo.id}>
-              <img src={photo.url} alt={photo.name} className="photo-img" />
-              <button
-                className="photo-remove"
-                onClick={() => confirmRemove(photo.id)}
-                title="Remove"
-              >
-                ✕
-              </button>
-            </div>
+            <PhotoCard
+              key={photo.id}
+              photo={photo}
+              onView={setLightbox}
+              onRemove={confirmRemove}
+            />
           ))}
         </div>
       )}
