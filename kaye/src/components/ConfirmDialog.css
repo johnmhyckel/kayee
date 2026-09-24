@@ -1,0 +1,90 @@
+/* ── Backdrop ── */
+.dialog-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(80, 20, 40, 0.35);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: backdropIn 0.15s ease-out;
+}
+
+/* ── Card ── */
+.dialog-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 28px 28px 22px;
+  width: min(320px, 88vw);
+  box-shadow: 0 16px 48px rgba(255, 111, 145, 0.25), 0 4px 12px rgba(0,0,0,0.1);
+  border: 1.5px solid rgba(255, 182, 193, 0.5);
+  animation: cardIn 0.18s ease-out;
+  text-align: center;
+}
+
+.dialog-message {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: #7a3050;
+  margin: 0 0 22px;
+  line-height: 1.5;
+}
+
+/* ── Buttons ── */
+.dialog-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.dialog-btn {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 50px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.dialog-cancel {
+  background: rgba(255, 182, 193, 0.25);
+  color: #b06080;
+  border: 1.5px solid rgba(255, 111, 145, 0.35);
+}
+
+.dialog-cancel:hover {
+  background: rgba(255, 182, 193, 0.45);
+  box-shadow: 0 4px 12px rgba(255, 111, 145, 0.15);
+}
+
+.dialog-confirm {
+  background: linear-gradient(135deg, #ff6f91, #ff4d6d);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(255, 111, 145, 0.4);
+}
+
+.dialog-confirm:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255, 111, 145, 0.5);
+}
+
+.dialog-btn:active {
+  transform: scale(0.96);
+}
+
+/* ── Animations ── */
+@keyframes backdropIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.92) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}

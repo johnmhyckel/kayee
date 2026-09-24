@@ -99,15 +99,7 @@
   box-shadow: 0 8px 25px rgba(255, 111, 145, 0.5);
 }
 
-/* shake on wrong PIN */
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  20%       { transform: translateX(-10px); }
-  40%       { transform: translateX(10px); }
-  60%       { transform: translateX(-8px); }
-  80%       { transform: translateX(8px); }
-}
-.shake { animation: shake 0.5s ease-out; }
+
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

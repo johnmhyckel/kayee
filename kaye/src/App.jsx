@@ -10,15 +10,13 @@ import './App.css';
 const App = () => {
   const [unlocked, setUnlocked] = useState(false);
   const [passcode, setPasscode] = useState('');
-  const [shake, setShake] = useState(false);
 
   const checkCode = () => {
     if (passcode === '0530') {
       setUnlocked(true);
     } else {
-      setShake(true);
+      alert('MALI PO BABYYY:<<, TRY MO PO UTRO BABY!!');
       setPasscode('');
-      setTimeout(() => setShake(false), 600);
     }
   };
 
@@ -29,7 +27,7 @@ const App = () => {
   if (!unlocked) {
     return (
       <div className="lock-overlay">
-        <div className={`lock-card ${shake ? 'shake' : ''}`}>
+        <div className="lock-card">
           <div className="lock-icon">🔒</div>
           <h2 className="lock-title">Enter PIN</h2>
           <input
