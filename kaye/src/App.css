@@ -5,8 +5,7 @@
 .app-layout {
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  overflow: hidden;
+  min-height: 100vh;
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
 }
 
@@ -18,14 +17,16 @@
   justify-content: center;
   overflow-y: auto;
   position: relative;
+  padding: 16px;
 }
 
 /* ── Lock screen ── */
 .lock-overlay {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 16px;
   background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 50%, #ff9a9e 100%);
   font-family: 'Poppins', sans-serif;
 }
@@ -35,7 +36,8 @@
   padding: 48px 40px;
   border-radius: 28px;
   text-align: center;
-  width: 320px;
+  width: 100%;
+  max-width: 340px;
   box-shadow: 0 15px 40px rgba(255, 111, 145, 0.35), 0 5px 15px rgba(0,0,0,0.08);
   border: 2px solid rgba(255, 182, 193, 0.5);
   animation: fadeIn 0.7s ease-out;
@@ -66,6 +68,8 @@
   transition: all 0.3s ease;
   display: block;
   margin-inline: auto;
+  /* prevent iOS zoom on focus */
+  font-size: clamp(16px, 4vw, 20px);
 }
 
 .lock-input:focus {
@@ -86,6 +90,8 @@
   font-family: 'Poppins', sans-serif;
   transition: all 0.3s ease;
   box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
+  width: 100%;
+  max-width: 200px;
 }
 
 .lock-btn:hover {
@@ -93,7 +99,7 @@
   box-shadow: 0 8px 25px rgba(255, 111, 145, 0.5);
 }
 
-/* shake animation on wrong PIN */
+/* shake on wrong PIN */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
   20%       { transform: translateX(-10px); }
@@ -101,12 +107,25 @@
   60%       { transform: translateX(-8px); }
   80%       { transform: translateX(8px); }
 }
-
-.shake {
-  animation: shake 0.5s ease-out;
-}
+.shake { animation: shake 0.5s ease-out; }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+  .lock-card {
+    padding: 36px 24px;
+    border-radius: 22px;
+  }
+  .lock-title { font-size: 1.7rem; }
+  .lock-input { width: 85%; }
+  .app-content { padding: 12px; }
+}
+
+/* ── Tablet ── */
+@media (min-width: 481px) and (max-width: 768px) {
+  .lock-card { padding: 44px 32px; }
 }

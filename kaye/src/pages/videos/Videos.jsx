@@ -1,23 +1,46 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { getAllVideos, addVideo, deleteVideo } from '../../db';
 import './Videos.css';
 
 const Videos = () => {
   const [videos, setVideos] = useState([]);
   const inputRef = useRef(null);
 
-  const handleUpload = (e) => {
+  // Load persisted videos from IndexedDB on mount
+  useEffect(() => {
+    getAllVideos().then((records) => {
+      const loaded = records.map((r) => ({
+        id: r.id,
+        url: URL.createObjectURL(r.blob),
+        name: r.name,
+      }));
+      setVideos(loaded);
+    });
+  }, []);
+
+  const handleUpload = async (e) => {
     const files = Array.from(e.target.files);
-    const newVideos = files.map((file) => ({
-      id: Date.now() + Math.random(),
-      url: URL.createObjectURL(file),
-      name: file.name,
-    }));
-    setVideos((prev) => [...prev, ...newVideos]);
     e.target.value = '';
+
+    const newVideos = await Promise.all(
+      files.map(async (file) => {
+        const id = Date.now() + Math.random();
+        const blob = file.slice(0, file.size, file.type); // copy as plain Blob
+        await addVideo({ id, blob, name: file.name });
+        return { id, url: URL.createObjectURL(blob), name: file.name };
+      })
+    );
+
+    setVideos((prev) => [...prev, ...newVideos]);
   };
 
-  const removeVideo = (id) => {
-    setVideos((prev) => prev.filter((v) => v.id !== id));
+  const removeVideo = async (id) => {
+    await deleteVideo(id);
+    setVideos((prev) => {
+      const removed = prev.find((v) => v.id === id);
+      if (removed) URL.revokeObjectURL(removed.url);
+      return prev.filter((v) => v.id !== id);
+    });
   };
 
   return (

@@ -8,10 +8,9 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    position: relative;
+    min-height: 100%;
+    padding: 20px 16px;
+    box-sizing: border-box;
 }
 
 .monthsary-page::before {
@@ -27,6 +26,7 @@
         radial-gradient(circle at 40% 40%, rgba(255, 111, 145, 0.2) 0%, transparent 50%);
     pointer-events: none;
     animation: float 6s ease-in-out infinite;
+    z-index: 0;
 }
 
 @keyframes float {
@@ -34,17 +34,19 @@
     50% { transform: translateY(-20px); }
 }
 
-.container {
+.monthsary-page .container {
     background: rgba(255, 255, 255, 0.95);
     padding: 35px;
     border-radius: 25px;
     text-align: center;
-    width: 85%;
+    width: 100%;
     max-width: 450px;
     box-shadow: 0 15px 35px rgba(255, 111, 145, 0.3), 0 5px 15px rgba(0,0,0,0.1);
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255, 182, 193, 0.5);
     animation: fadeIn 0.8s ease-out;
+    position: relative;
+    z-index: 1;
 }
 
 @keyframes fadeIn {
@@ -52,65 +54,45 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-h1 {
+.monthsary-page .container h1 {
     font-family: 'Dancing Script', cursive;
     color: #ff6f91;
-    font-size: 2.5em;
+    font-size: clamp(1.6rem, 5vw, 2.5rem);
     margin-bottom: 25px;
     text-shadow: 2px 2px 4px rgba(255, 111, 145, 0.2);
 }
 
-input {
-    padding: 15px;
-    width: 70%;
-    font-size: 18px;
-    text-align: center;
-    border: 2px solid #ffb6c1;
-    border-radius: 15px;
-    margin-bottom: 20px;
-    background: rgba(255, 255, 255, 0.9);
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(255, 182, 193, 0.2);
-}
-
-input:focus {
-    outline: none;
-    border-color: #ff6f91;
-    box-shadow: 0 0 15px rgba(255, 111, 145, 0.4);
-    transform: scale(1.02);
-}
-
-button {
-    padding: 12px 30px;
+.monthsary-page .container button {
+    padding: 12px 28px;
     background: linear-gradient(135deg, #ff6f91 0%, #ff9a9e 100%);
     color: white;
     border: none;
     border-radius: 15px;
-    margin: 8px;
+    margin: 8px 6px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 16px;
+    font-size: clamp(14px, 3.5vw, 16px);
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(255, 111, 145, 0.3);
     font-family: 'Poppins', sans-serif;
 }
 
-button:hover {
+.monthsary-page .container button:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 25px rgba(255, 111, 145, 0.5);
     background: linear-gradient(135deg, #ff9a9e 0%, #ff6f91 100%);
 }
 
-button:active {
+.monthsary-page .container button:active {
     transform: translateY(-1px);
 }
 
 .msg-text {
     font-family: 'Dancing Script', cursive;
-    font-size: 20px;
+    font-size: clamp(16px, 4vw, 20px);
     color: #ff6f91;
     margin-bottom: 20px;
-    max-height: 300px;
+    max-height: 55vh;
     overflow-y: auto;
     line-height: 1.8;
     text-align: center;
@@ -120,26 +102,30 @@ button:active {
     box-shadow: inset 0 2px 10px rgba(255, 111, 145, 0.1);
 }
 
-.msg-text::-webkit-scrollbar {
-    width: 8px;
-}
-
-.msg-text::-webkit-scrollbar-track {
-    background: rgba(255, 182, 193, 0.2);
-    border-radius: 10px;
-}
-
-.msg-text::-webkit-scrollbar-thumb {
-    background: #ff6f91;
-    border-radius: 10px;
-}
+.msg-text::-webkit-scrollbar { width: 6px; }
+.msg-text::-webkit-scrollbar-track { background: rgba(255, 182, 193, 0.2); border-radius: 10px; }
+.msg-text::-webkit-scrollbar-thumb { background: #ff6f91; border-radius: 10px; }
 
 .back-btn {
-    background: linear-gradient(135deg, #ffb6c1 0%, #ff9a9e 100%);
+    background: linear-gradient(135deg, #ffb6c1 0%, #ff9a9e 100%) !important;
 }
 
-iframe {
+.monthsary-page iframe {
     border-radius: 15px;
     box-shadow: 0 8px 25px rgba(255, 111, 145, 0.3);
     margin-bottom: 15px;
+    width: 100%;
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    .monthsary-page .container {
+        padding: 24px 18px;
+        border-radius: 20px;
+    }
+    .monthsary-page .container button {
+        padding: 11px 20px;
+        width: 100%;
+        margin: 6px 0;
+    }
 }
