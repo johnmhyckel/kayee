@@ -15,7 +15,7 @@ const App = () => {
     if (passcode === '0530') {
       setUnlocked(true);
     } else {
-      alert('MALI PO BABYYY:<<, TRY MO PO UTRO BABY!!');
+      alert('MALI PO BABYY:<<, TRY MO PO UTRO BABY!!');
       setPasscode('');
     }
   };
