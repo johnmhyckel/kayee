@@ -5,8 +5,8 @@ const Home = () => {
     <div className="home-page">
       <div className="home-container">
         <div className="home-emoji">🌸</div>
-        <h1 className="home-title">Hi Kaye!</h1>
-        <p className="home-subtitle">This little corner of the internet is just for you baby 💕</p>
+        <h1 className="home-title">Haloo baby!</h1>
+        <p className="home-subtitle">A special place, just for you baby 💕</p>
         <div className="home-hearts">
           <span>💖</span>
           <span>💝</span>

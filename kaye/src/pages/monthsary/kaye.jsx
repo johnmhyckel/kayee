@@ -1,12 +1,96 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './kaye.css';
+
+const UNLOCK_KEY = 'monthsary_unlocked';
+
+// The 30th has "started" once the clock hits midnight (00:00:00) on the 30th
+const checkUnlocked = () => {
+  if (localStorage.getItem(UNLOCK_KEY) === 'true') return true;
+  const now = new Date();
+  const eligible = now.getDate() >= 30; // midnight of the 30th or later
+  if (eligible) localStorage.setItem(UNLOCK_KEY, 'true');
+  return eligible;
+};
+
+// Returns { days, hours, minutes, seconds } until next 30th at 00:00:00
+const getTimeUntil = () => {
+  const now = new Date();
+  const target = new Date(now.getFullYear(), now.getMonth(), 30, 0, 0, 0);
+  if (now >= target) {
+    // Already past the 30th this month — aim for next month's 30th
+    target.setMonth(target.getMonth() + 1);
+  }
+  const diff = target - now;
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  return {
+    days:    Math.floor(diff / (1000 * 60 * 60 * 24)),
+    hours:   Math.floor((diff / (1000 * 60 * 60)) % 24),
+    minutes: Math.floor((diff / (1000 * 60)) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  };
+};
+
+const pad = (n) => String(n).padStart(2, '0');
 
 const Kaye = () => {
   const [currentSection, setCurrentSection] = useState('main-menu');
+  const [unlocked, setUnlocked] = useState(checkUnlocked);
+  const [timeLeft, setTimeLeft] = useState(getTimeUntil);
+
+  // Tick every second; auto-unlock the moment the 30th arrives
+  useEffect(() => {
+    if (unlocked) return;
+    const interval = setInterval(() => {
+      if (checkUnlocked()) {
+        setUnlocked(true);
+        clearInterval(interval);
+      } else {
+        setTimeLeft(getTimeUntil());
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [unlocked]);
 
   const showSection = (section) => {
     setCurrentSection(section);
   };
+
+  if (!unlocked) {
+    const { days, hours, minutes, seconds } = timeLeft;
+    return (
+      <div className="monthsary-page">
+        <div className="container lock-container">
+          <div className="lock-icon">🔒</div>
+          <h1>Our Special Day</h1>
+          <p className="lock-subtitle">Unlocks every</p>
+          <div className="lock-date">30th of the month</div>
+          <p className="lock-subtitle" style={{ marginTop: '12px' }}>at midnight 🌙</p>
+          <div className="lock-countdown-timer">
+            <div className="countdown-unit">
+              <span className="countdown-num">{pad(days)}</span>
+              <span className="countdown-label">days</span>
+            </div>
+            <span className="countdown-sep">:</span>
+            <div className="countdown-unit">
+              <span className="countdown-num">{pad(hours)}</span>
+              <span className="countdown-label">hrs</span>
+            </div>
+            <span className="countdown-sep">:</span>
+            <div className="countdown-unit">
+              <span className="countdown-num">{pad(minutes)}</span>
+              <span className="countdown-label">min</span>
+            </div>
+            <span className="countdown-sep">:</span>
+            <div className="countdown-unit">
+              <span className="countdown-num">{pad(seconds)}</span>
+              <span className="countdown-label">sec</span>
+            </div>
+          </div>
+          <p className="lock-hint">Come back on our monthsary to open it 🎀</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="monthsary-page">
@@ -33,7 +117,7 @@ const Kaye = () => {
         </div>
       )}
 
-      {currentSection === 'song-div' && (
+      {currentSection === 'song' && (
         <div className="container">
           <iframe
             width="100%"

@@ -53,10 +53,11 @@ const App = () => {
         <Navbar />
         <main className="app-content">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Kaye />} />
             <Route path="/photos" element={<Photos />} />
             <Route path="/videos" element={<Videos />} />
             <Route path="/monthsary" element={<Kaye />} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </main>
       </div>
