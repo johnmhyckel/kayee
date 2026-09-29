@@ -62,7 +62,7 @@ const Kaye = () => {
         <div className="container lock-container">
           <div className="lock-icon">🔒</div>
           <h1>Our Special Day</h1>
-          <p className="lock-subtitle">Unlocks every</p>
+          <p className="lock-subtitle">Our little love story unlocks every</p>
           <div className="lock-date">30th of the month</div>
           <p className="lock-subtitle" style={{ marginTop: '12px' }}>at midnight 🌙</p>
           <div className="lock-countdown-timer">
@@ -86,7 +86,7 @@ const Kaye = () => {
               <span className="countdown-label">sec</span>
             </div>
           </div>
-          <p className="lock-hint">Come back on our monthsary to open it 🎀</p>
+          <p className="lock-hint">Don’t miss our special day baby—come back and unlock it with me.🎀</p>
         </div>
       </div>
     );
